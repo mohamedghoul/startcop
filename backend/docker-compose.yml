@@ -6,3 +6,42 @@ services:
       - "3000:3000"
     volumes:
       - ./src:/app/src
+    depends_on:
+      - mongo
+      - chroma
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+
+  data-populator:
+    build: .
+    container_name: startcop-data-populator
+    command: python src/db/populate_test_data.py --test
+    depends_on:
+      - mongo
+      - chroma
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+
+  mongo:
+    image: mongo:7
+    container_name: startcop-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  chroma:
+    image: chromadb/chroma
+    container_name: startcop-chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/chroma/.chroma/index
+
+volumes:
+  mongo_data:
+  chroma_data:
