@@ -5,6 +5,7 @@ Run with the --test flag to populate test data.
 """
 import argparse
 import os
+import logging
 from pymongo import MongoClient
 import chromadb
 from chromadb.config import Settings
@@ -107,7 +108,7 @@ def populate_chromadb(is_test=True):
             documents=[chunk["text"]],
             metadatas=[chunk["metadata"]]
         )
-    print(f"Inserted {len(regulatory_chunks)} regulatory chunks into ChromaDB collection '{collection_name}'")
+    logging.info(f"Inserted {len(regulatory_chunks)} regulatory chunks into ChromaDB collection '{collection_name}'")
 
 def populate_mongodb(is_test=True):
     mongo_uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
@@ -120,16 +121,17 @@ def populate_mongodb(is_test=True):
         startup_articles
     ])
     db.resource_mapping.insert_one(resource_mapping)
-    print(f"Inserted startup docs and resource mapping into MongoDB database '{db_name}'")
+    logging.info(f"Inserted startup docs and resource mapping into MongoDB database '{db_name}'")
 
 def main():
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     parser = argparse.ArgumentParser(description="Populate test or production data for ChromaDB and MongoDB.")
     parser.add_argument("--test", action="store_true", help="Populate test data (default: production data)")
     args = parser.parse_args()
     is_test = args.test
     populate_chromadb(is_test)
     populate_mongodb(is_test)
-    print("Data population complete.")
+    logging.info("Data population complete.")
 
 if __name__ == "__main__":
     main()
