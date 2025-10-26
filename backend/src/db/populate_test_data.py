@@ -98,30 +98,36 @@ def dummy_embed(text):
 
 # --- Main population script ---
 def populate_chromadb(is_test=True):
-    chroma_client = chromadb.HttpClient(host=os.environ.get("CHROMA_HOST", "localhost"), port=int(os.environ.get("CHROMA_PORT", 8000)), settings=Settings(allow_reset=True))
-    collection_name = "regulations_test" if is_test else "regulations"
-    collection = chroma_client.get_or_create_collection(collection_name)
-    for chunk in regulatory_chunks:
-        collection.upsert(
-            ids=[chunk["id"]],
-            embeddings=[dummy_embed(chunk["text"])],
-            documents=[chunk["text"]],
-            metadatas=[chunk["metadata"]]
-        )
-    logging.info(f"Inserted {len(regulatory_chunks)} regulatory chunks into ChromaDB collection '{collection_name}'")
+    try:
+        chroma_client = chromadb.HttpClient(host=os.environ.get("CHROMA_HOST", "localhost"), port=int(os.environ.get("CHROMA_PORT", 8000)), settings=Settings(allow_reset=True))
+        collection_name = "regulations_test" if is_test else "regulations"
+        collection = chroma_client.get_or_create_collection(collection_name)
+        for chunk in regulatory_chunks:
+            collection.upsert(
+                ids=[chunk["id"]],
+                embeddings=[dummy_embed(chunk["text"])],
+                documents=[chunk["text"]],
+                metadatas=[chunk["metadata"]]
+            )
+        logging.info(f"Inserted {len(regulatory_chunks)} regulatory chunks into ChromaDB collection '{collection_name}'")
+    except Exception as e:
+        logging.error(f"Failed to connect or upsert to ChromaDB: {e}")
 
 def populate_mongodb(is_test=True):
-    mongo_uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
-    db_name = "startcop_test" if is_test else "startcop"
-    client = MongoClient(mongo_uri)
-    db = client[db_name]
-    db.startup_documents.insert_many([
-        startup_business_plan,
-        startup_privacy_policy,
-        startup_articles
-    ])
-    db.resource_mapping.insert_one(resource_mapping)
-    logging.info(f"Inserted startup docs and resource mapping into MongoDB database '{db_name}'")
+    try:
+        mongo_uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
+        db_name = "startcop_test" if is_test else "startcop"
+        client = MongoClient(mongo_uri)
+        db = client[db_name]
+        db.startup_documents.insert_many([
+            startup_business_plan,
+            startup_privacy_policy,
+            startup_articles
+        ])
+        db.resource_mapping.insert_one(resource_mapping)
+        logging.info(f"Inserted startup docs and resource mapping into MongoDB database '{db_name}'")
+    except Exception as e:
+        logging.error(f"Failed to connect or insert to MongoDB: {e}")
 
 def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
