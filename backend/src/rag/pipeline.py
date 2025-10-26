@@ -2,6 +2,8 @@ from typing import List, Dict, Any
 import chromadb
 from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
+
+import re
 from .scorecard import ReadinessScorecard
 
 class RAGPipeline:
@@ -28,7 +30,6 @@ class RAGPipeline:
 		Splits a regulatory markdown document into chunks (by article/section), embeds, and upserts to ChromaDB.
 		Each chunk is stored with metadata for explainable retrieval.
 		"""
-		import re
 		chunks = []
 		# Simple regex: split by 'Article X.Y.Z' or 'SECTION X' or numbered headings
 		article_pattern = re.compile(r'(Article\s+\d+(?:\.\d+)*:?.*?)(?=\n[A-Z]|\nArticle|\nSECTION|\n\d+\.|\Z)', re.DOTALL)
