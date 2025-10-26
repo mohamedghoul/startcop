@@ -47,7 +47,6 @@ StartCop is a modular, local-first AI backend for regulatory gap analysis and re
    - Build the backend image
    - Start MongoDB, ChromaDB, and the backend API
    - Run all tests before starting the backend
-   - Download the MiniLM embedding model (first run only)
 
 3. **Access the API:**
    - FastAPI docs: [http://localhost:3000/docs](http://localhost:3000/docs)
@@ -102,24 +101,3 @@ Set in `docker-compose.yml` (override as needed):
 - **Windows users:** Use WSL2 for best Docker performance.
 - **Model download issues:** The first run will download the MiniLM model; ensure internet access.
 - **Test failures:** Check logs for details; all tests must pass before backend starts.
-
----
-
-## How to Contribute
-
-1. **Fork and clone the repo.**
-2. **Create a feature branch:**
-   ```sh
-   git checkout -b feat/your-feature
-   ```
-3. **Make changes and add tests.**
-4. **Commit with [Conventional Commits](https://www.conventionalcommits.org/):**
-   - `feat: ...`, `fix: ...`, `test: ...`, `chore: ...`, etc.
-5. **Push and open a PR.**
-
-**Tips:**
-- All code must pass tests (`pytest`) before merging.
-- Use clear docstrings and type hints.
-- Keep Docker and Compose files up to date if you add dependencies.
-
----
