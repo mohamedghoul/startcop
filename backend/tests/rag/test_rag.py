@@ -4,7 +4,7 @@ These tests validate retrieval and explanation accuracy using mock data and gap 
 """
 
 import pytest
-from ...src.rag.pipeline import RAGPipeline
+from src.rag.pipeline import RAGPipeline
 
 
 @pytest.fixture(scope="module")
@@ -17,7 +17,7 @@ def test_data_residency_retrieval(rag):
     query = "Our data is stored on AWS in Ireland and Singapore."
     results = rag.retrieve(query, top_k=3)
     import logging
-    from ...src.rag.pipeline import RAGPipeline
+    from src.rag.pipeline import RAGPipeline
 
     @pytest.fixture(scope="module")
     def rag_pipeline():

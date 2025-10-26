@@ -5,7 +5,7 @@ Run with pytest.
 """
 
 import pytest
-from ...src.rag.pipeline import RAGPipeline
+from src.rag.pipeline import RAGPipeline
 from collections import defaultdict
 
 

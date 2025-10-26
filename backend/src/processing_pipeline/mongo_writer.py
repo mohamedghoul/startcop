@@ -1,4 +1,5 @@
-from document_database.mongo_setup import MongoDocumentStore
+from src.document_database.mongo_setup import MongoDocumentStore
+
 
 class MongoWriter:
     def __init__(self):

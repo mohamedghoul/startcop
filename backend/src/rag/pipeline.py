@@ -4,7 +4,7 @@ from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
 
 import re
-from .scorecard import ReadinessScorecard
+from src.rag.scorecard import ReadinessScorecard
 
 
 class RAGPipeline:

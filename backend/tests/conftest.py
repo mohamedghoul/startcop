@@ -1,6 +1,11 @@
+import sys
+import os
+sys.path.insert(0, "/app")
+sys.path.insert(0, "/app/src")
+
 import pytest
 import logging
-from ...src.rag.pipeline import RAGPipeline
+from src.rag.pipeline import RAGPipeline
 
 
 @pytest.fixture(scope="session")

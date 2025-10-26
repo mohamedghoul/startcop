@@ -7,7 +7,7 @@ Run with the --test flag to populate test data.
 import argparse
 import os
 import logging
-from .schema import (
+from src.db.schema import (
     STARTUP_DOCUMENT_SCHEMA,
     RESOURCE_MAPPING_SCHEMA,
     CHROMA_REGULATIONS_SCHEMA,

@@ -2,8 +2,7 @@
 Test ReadinessScorecard logic for regulatory compliance scoring.
 """
 
-import pytest
-from ...src.rag.scorecard import ReadinessScorecard
+from src.rag.scorecard import ReadinessScorecard
 
 
 def test_scorecard_basic():
