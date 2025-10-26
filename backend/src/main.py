@@ -19,20 +19,25 @@ class RAGQuery(BaseModel):
     query: str
     top_k: int = 3
 
-@app.get("/api/v0")
-def read_root():
+
+from fastapi.responses import JSONResponse
+
+@app.get("/api/v0", response_class=JSONResponse)
+def read_root() -> dict:
     return {"message": "StartCop API Version 0 is running."}
 
-@app.post("/api/v0/upload/")
-async def upload_document(file: UploadFile = File(...)):
+
+@app.post("/api/v0/upload/", response_class=JSONResponse)
+async def upload_document(file: UploadFile = File(...)) -> dict:
     # TODO Save the file in the database
     content = await file.read()
     filename = file.filename
     # TODO Trigger ingestion and processing of the uploaded document
     return {"filename": file.filename, "size": len(content), "message": "File uploaded successfully."}
 
-@app.post("/api/v0/rag/")
-def run_rag(query: RAGQuery, with_scorecard: bool = Query(False, description="Include readiness scorecard")):
+
+@app.post("/api/v0/rag/", response_class=JSONResponse)
+def run_rag(query: RAGQuery, with_scorecard: bool = Query(False, description="Include readiness scorecard")) -> dict:
     """Run the RAG pipeline with a user query and return explanation and relevant regulations. Optionally include readiness scorecard."""
     result = rag_pipeline.run(query.query, top_k=query.top_k, with_scorecard=with_scorecard)
     return result
