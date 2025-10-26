@@ -25,9 +25,9 @@ from knowledge_base.update_scheduler import start_scheduler    # NEW
 # ------------------------------------------------------------------
 # Env-based configuration (see config.py for defaults / overrides)
 # ------------------------------------------------------------------
-BACKEND_DIR   = Path(__file__).parent
-kb_path       = BACKEND_DIR / os.getenv("KB_PATH", "real_qcb_regulations.json")
-res_path      = BACKEND_DIR / os.getenv("RES_PATH", "resource_mapping_data.json")
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+kb_path   = REPO_ROOT / "backend" / "src" / os.getenv("KB_PATH", "real_qcb_regulations.json")
+res_path  = REPO_ROOT / "backend" / "src" / os.getenv("RES_PATH", "resource_mapping_data.json")
 MONGO_URI     = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 
 # ------------------------------------------------------------------
@@ -87,7 +87,22 @@ async def apply_fintech(
 
         results = []
         for doc in docs:
+            # >>>  DEBUG  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            from document_processor.parser import DocumentParser
+            raw_text = DocumentParser().parse_document(doc["path"])
+            print(f"=== TEXT LEN {len(raw_text)}  FIRST 800 chars ===")
+            print(raw_text[:800])
+            print("=== END TEXT ======================================")
+            # >>>  END DEBUG  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
             res = engine.process_document(doc["path"])
+            # >>>  DEBUG  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            print(f"=== EXTRACTED METRICS COUNT: {len(res.entities.financial_metrics)} ===")
+            for m in res.entities.financial_metrics:
+                print(m.model_dump())
+            print("=== END METRICS =====================================")
+            # >>>  END DEBUG  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
             gaps = gapper.find_gaps(res.entities)
 
             # Persist structured output for Objective 2

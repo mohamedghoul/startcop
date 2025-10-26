@@ -1,14 +1,17 @@
+# ---- backend/Dockerfile ----
 FROM python:3.11-slim
+
+# system deps
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
-
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
-COPY tests/ ./tests/
 
-EXPOSE 3000
-
-CMD pytest tests && uvicorn src.main:app --host 0.0.0.0 --port 3000 --reload
+EXPOSE 8000
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

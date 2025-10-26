@@ -43,3 +43,38 @@ pytest
 # # Utilities
 # python-dotenv==1.0.0
 # tqdm==4.66.1
+
+
+# ======== Backend-only dependencies for Objective 1 ========
+
+# API layer
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Document ingestion & OCR
+pdfplumber==0.10.3
+python-docx==1.1.0
+openpyxl>=3.1.2
+Pillow>=10.1.0
+pytesseract>=0.3.10
+aiofiles>=23.2.1          # async file handling
+
+# NLP & AI extraction
+transformers==4.35.0
+torch==2.1.0
+sentence-transformers==2.2.2
+spacy==3.7.2
+
+# MongoDB for Objective 2 integration
+pymongo[srv]>=4.6
+
+# Scheduler for 24-h KB refresh
+apscheduler==3.10.4
+
+# Utilities
+python-dotenv==1.0.0
+pydantic==2.5.0
+
+pycountry                         # country recognition for data-residency gap
+playwright>=1.40.0               # optional: auto-screenshot of Swagger UI
