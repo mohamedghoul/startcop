@@ -1,4 +1,64 @@
-# React + TypeScript + Vite
+# StartCop Frontend
+
+A modern React application for regulatory compliance evaluation.
+
+## Features
+
+- **New Application Flow**: Multi-step form for creating compliance evaluation applications
+- **Document Upload**: Drag-and-drop file upload supporting PDF and DOCX files
+- **Framework Selection**: Multi-select interface for choosing regulatory frameworks
+- **Dashboard**: Overview of applications with statistics and recent activity
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Accessible**: WCAG compliant with proper ARIA labels and keyboard navigation
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/ui/     # Reusable UI components
+├── hooks/             # Custom React hooks
+├── pages/             # Page components
+├── lib/               # Utility functions
+└── App.tsx           # Main application with routing
+```
+
+## Implementation Details
+
+See [IMPLEMENTATION.md](./IMPLEMENTATION.md) for detailed documentation about the New Application page implementation.
+
+## Tech Stack
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
