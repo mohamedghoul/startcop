@@ -13,6 +13,7 @@ services:
       - MONGO_URI=mongodb://mongo:27017
       - CHROMA_HOST=chroma
       - CHROMA_PORT=8000
+    command: uvicorn src.main:app --host 0.0.0.0 --port 3000 --reload
 
   data-populator:
     build: .
