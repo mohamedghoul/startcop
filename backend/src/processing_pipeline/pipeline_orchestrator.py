@@ -119,7 +119,13 @@ class ProcessingPipeline:
             )
             logger.info(f"[DATA] ProcessingResult: {result}")
             # Convert result to dict for API compatibility
-            result_dict = result.dict() if hasattr(result, "dict") else dict(result)
+            import dataclasses
+
+            result_dict = (
+                dataclasses.asdict(result)
+                if hasattr(result, "__dataclass_fields__")
+                else dict(result)
+            )
             result_dict.update(
                 {
                     "document_path": document_path,

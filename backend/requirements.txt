@@ -4,7 +4,6 @@ python-multipart
 chromadb
 pymongo
 sentence-transformers
-pydantic
 pytest
 pandas
 pdfplumber

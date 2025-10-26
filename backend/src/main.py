@@ -1,9 +1,10 @@
 from fastapi import FastAPI, UploadFile, File, Query, Form
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from dataclasses import dataclass
 from src.rag.pipeline import RAGPipeline
 from fastapi.responses import JSONResponse
 import os
+import dataclasses
 import json
 import tempfile
 import shutil
@@ -32,7 +33,8 @@ app.add_middleware(
 rag_pipeline = RAGPipeline(collection_name="regulations_test")
 
 
-class RAGQuery(BaseModel):
+@dataclass
+class RAGQuery:
     query: str
     top_k: int = 3
 
@@ -99,12 +101,14 @@ async def upload_and_apply(
             logger.info(f"Extraction result for {doc['type']}: {res.entities}")
             gaps = gapper.find_gaps(res.entities)
             logger.info(f"Gap analysis for {doc['type']}: {gaps}")
-            doc_id = mongo.save_document_result(app_id, doc["type"], res.dict())
+            doc_id = mongo.save_document_result(
+                app_id, doc["type"], dataclasses.asdict(res)
+            )
             logger.info(f"Written to MongoDB with doc_id={doc_id}")
             results.append(
                 {
                     "document": doc["type"],
-                    "gaps": [g.dict() for g in gaps],
+                    "gaps": [dataclasses.asdict(g) for g in gaps],
                     "mongo_doc_id": doc_id,
                 }
             )

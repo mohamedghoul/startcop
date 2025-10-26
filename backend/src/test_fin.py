@@ -12,7 +12,9 @@ result = fe.extract(txt)
 
 print("---- RAW ENTITIES ----")
 for m in result.entities:
-    print(m.dict())
+    import dataclasses
+
+    print(dataclasses.asdict(m))
 
 print("---- GAPS (manual) ----")
 for m in result.entities:

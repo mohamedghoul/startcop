@@ -1,0 +1,242 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.35kB done
+#1 DONE 0.0s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 611B done
+#2 DONE 0.0s
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [data-populator internal] load metadata for docker.io/library/python:3.11-slim
+#4 DONE 1.4s
+
+#5 [backend internal] load .dockerignore
+#5 transferring context: 192B done
+#5 DONE 0.0s
+
+#6 [data-populator 1/8] FROM docker.io/library/python:3.11-slim@sha256:8eb5fc663972b871c528fef04be4eaa9ab8ab4539a5316c4b8c133771214a617
+#6 DONE 0.0s
+
+#7 [data-populator internal] load build context
+#7 transferring context: 11.36kB done
+#7 DONE 0.0s
+
+#8 [backend 2/8] RUN apt-get update && apt-get install -y     tesseract-ocr     build-essential     curl     procps     iproute2     && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [backend 4/8] COPY requirements.txt .
+#9 CACHED
+
+#10 [backend 3/8] WORKDIR /app
+#10 CACHED
+
+#11 [backend 5/8] RUN pip install --no-cache-dir -r requirements.txt     && pip install --no-cache-dir uvicorn[standard] watchdog
+#11 CACHED
+
+#12 [backend 6/8] COPY src/ ./src/
+#12 DONE 0.1s
+
+#13 [data-populator 7/8] COPY tests/ ./tests/
+#13 DONE 0.0s
+
+#14 [backend 8/8] RUN find . -type d -name "__pycache__" -exec rm -rf {} +
+#14 DONE 0.1s
+
+#15 [backend] exporting to image
+#15 exporting layers 0.0s done
+#15 writing image sha256:fbcc9ed6f11b247c063ad907df0764019073fe71238238d9b45999f310d61bbc done
+#15 naming to docker.io/library/backend-backend done
+#15 DONE 0.0s
+
+#16 [data-populator] exporting to image
+#16 exporting layers 0.0s done
+#16 writing image sha256:b4da077b0c68939bae10065d8672905f7460c612cd253c9d44e0c4ebe98aed0e done
+#16 naming to docker.io/library/backend-data-populator done
+#16 DONE 0.0s
+
+#17 [backend] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#18 [data-populator] resolving provenance for metadata file
+#18 DONE 0.0s
+ backend-data-populator  Built
+ backend-backend  Built
+ Container startcop-backend  Recreate
+ Container startcop-data-populator  Recreate
+ Container startcop-data-populator  Recreated
+ Container startcop-backend  Recreated
+Attaching to startcop-backend, startcop-chroma, startcop-data-populator, startcop-mongo
+startcop-chroma  | 
+startcop-chroma  | ==========
+startcop-chroma  | persist_path: "/data"
+startcop-chroma  | 
+startcop-chroma  | ==========
+startcop-chroma  | 
+startcop-chroma  | 
+startcop-chroma  |                 [38;5;069m(((((((((    [38;5;203m((((([38;5;220m####
+startcop-chroma  |              [38;5;069m((((((((((((([38;5;203m((((((((([38;5;220m#########
+startcop-chroma  |            [38;5;069m((((((((((((([38;5;203m((((((((((([38;5;220m###########
+startcop-chroma  |          [38;5;069m(((((((((((((([38;5;203m(((((((((((([38;5;220m############
+startcop-chroma  |         [38;5;069m((((((((((((([38;5;203m(((((((((((((([38;5;220m#############
+startcop-chroma  |         [38;5;069m((((((((((((([38;5;203m(((((((((((((([38;5;220m#############
+startcop-chroma  |          [38;5;069m(((((((((((([38;5;203m((((((((((((([38;5;220m##############
+startcop-chroma  |          [38;5;069m(((((((((((([38;5;203m(((((((((((([38;5;220m##############
+startcop-chroma  |            [38;5;069m(((((((((([38;5;203m((((((((((([38;5;220m#############
+startcop-chroma  |              [38;5;069m(((((((([38;5;203m(((((((([38;5;220m##############
+startcop-chroma  |                 [38;5;069m((((([38;5;203m((((    [38;5;220m#########[0m
+startcop-chroma  | 
+startcop-chroma  | Saving data to: /data
+startcop-chroma  | Connect to Chroma at: http://localhost:8000
+startcop-chroma  | Getting started guide: https://docs.trychroma.com/docs/overview/getting-started
+startcop-chroma  | 
+startcop-chroma  | ☁️ To deploy your DB - try Chroma Cloud!
+startcop-chroma  | - Sign up: https://trychroma.com/signup
+startcop-chroma  | - Docs: https://docs.trychroma.com/cloud/getting-started
+startcop-chroma  | - Copy your data to Cloud: chroma copy --to-cloud --all
+startcop-chroma  | 
+startcop-chroma  | OpenTelemetry is not enabled because it is missing from the config.
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.423+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"main","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.424+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"main","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":21},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":21},"outgoing":{"minWireVersion":6,"maxWireVersion":21},"isInternalClient":true}}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.426+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.427+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationDonorService","namespace":"config.tenantMigrationDonors"}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.427+00:00"},"s":"I",  "c":"REPL",     "id":5123008, "ctx":"main","msg":"Successfully registered PrimaryOnlyService","attr":{"service":"TenantMigrationRecipientService","namespace":"config.tenantMigrationRecipients"}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.427+00:00"},"s":"I",  "c":"CONTROL",  "id":5945603, "ctx":"main","msg":"Multi threading initialized"}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.427+00:00"},"s":"I",  "c":"TENANT_M", "id":7091600, "ctx":"main","msg":"Starting TenantMigrationAccessBlockerRegistry"}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.428+00:00"},"s":"I",  "c":"CONTROL",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"5c4b5272db06"}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.428+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"7.0.25","gitVersion":"96dce3da49b8d2e9e0d328048cb56930eb1bdb2b","openSSLVersion":"OpenSSL 3.0.2 15 Mar 2022","modules":[],"allocator":"tcmalloc","environment":{"distmod":"ubuntu2204","distarch":"aarch64","target_arch":"aarch64"}}}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.428+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"22.04"}}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.428+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"net":{"bindIp":"*"}}}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.430+00:00"},"s":"I",  "c":"STORAGE",  "id":22270,   "ctx":"initandlisten","msg":"Storage engine to use detected by data files","attr":{"dbpath":"/data/db","storageEngine":"wiredTiger"}}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.430+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+startcop-mongo   | {"t":{"$date":"2025-10-26T07:49:57.430+00:00"},"s":"I",  "c":"STORAGE",  "id":22315,   "ctx":"initandlisten","msg":"Opening WiredTiger","attr":{"config":"create,cache_size=3406M,session_max=33000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,remove=true,path=journal,compressor=snappy),builtin_extension_config=(zstd=(compression_level=6)),file_manager=(close_idle_time=600,close_scan_interval=10,close_handle_minimum=2000),statistics_log=(wait=0),json_output=(error,message),verbose=[recovery_progress:1,checkpoint_progress:1,compact_progress:1,backup:0,checkpoint:0,compact:0,evict:0,history_store:0,recovery:0,rts:0,salvage:0,tiered:0,timestamp:0,transaction:0,verify:0,log:0],"}}
+startcop-backend  | INFO:     Will watch for changes in these directories: ['/app']
+startcop-backend  | INFO:     Uvicorn running on http://0.0.0.0:3000 (Press CTRL+C to quit)
+startcop-backend  | INFO:     Started reloader process [1] using WatchFiles
+startcop-mongo    | {"t":{"$date":"2025-10-26T07:49:57.923+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464997,"ts_usec":922987,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Recovering log 20 through 21"}}}
+startcop-mongo    | {"t":{"$date":"2025-10-26T07:49:58.013+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":13862,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Recovering log 21 through 21"}}}
+startcop-mongo    | {"t":{"$date":"2025-10-26T07:49:58.090+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":90846,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Main recovery loop: starting at 20/7424 to 21/256"}}}
+startcop-data-populator  | 2025-10-26 07:49:58,132 [INFO] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.150+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":150242,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Recovering log 20 through 21"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.184+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":184910,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Recovering log 21 through 21"}}}
+startcop-data-populator  | 2025-10-26 07:49:58,202 [INFO] HTTP Request: GET http://chroma:8000/api/v2/auth/identity "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,202 [INFO] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+startcop-data-populator  | 2025-10-26 07:49:58,209 [INFO] HTTP Request: GET http://chroma:8000/api/v2/tenants/default_tenant "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,210 [INFO] HTTP Request: GET http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database "HTTP/1.1 200 OK"
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.215+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":215155,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"recovery log replay has successfully finished and ran for 292 milliseconds"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.215+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":215227,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Set global recovery timestamp: (0, 0)"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.215+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":215243,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"Set global oldest timestamp: (0, 0)"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.215+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":215446,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"recovery rollback to stable has successfully finished and ran for 0 milliseconds"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.216+00:00"},"s":"I",  "c":"WTCHKPT",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":216386,"thread":"1:0xffffbbed9040","session_name":"WT_SESSION.checkpoint","category":"WT_VERB_CHECKPOINT_PROGRESS","category_id":6,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"saving checkpoint snapshot min: 1, snapshot max: 1 snapshot count: 0, oldest timestamp: (0, 0) , meta checkpoint timestamp: (0, 0) base write gen: 642"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.219+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":219743,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"recovery checkpoint has successfully finished and ran for 4 milliseconds"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.219+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761464998,"ts_usec":219784,"thread":"1:0xffffbbed9040","session_name":"txn-recover","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"recovery was completed successfully and took 297ms, including 292ms for the log replay, 0ms for the rollback to stable, and 4ms for the checkpoint."}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.220+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":790}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.220+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+startcop-data-populator  | 2025-10-26 07:49:58,220 [INFO] HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,221 [INFO] HTTP Request: GET http://chroma:8000/api/v2/pre-flight-checks "HTTP/1.1 200 OK"
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.223+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.223+00:00"},"s":"W",  "c":"CONTROL",  "id":9068900, "ctx":"initandlisten","msg":"For customers running MongoDB 7.0, we suggest changing the contents of the following sysfsFile","attr":{"sysfsFile":"/sys/kernel/mm/transparent_hugepage","currentValue":"always","desiredValue":"never"},"tags":["startupWarnings"]}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.223+00:00"},"s":"W",  "c":"CONTROL",  "id":5123300, "ctx":"initandlisten","msg":"vm.max_map_count is too low","attr":{"currentValue":262144,"recommendedMinimum":1677720,"maxConns":838860},"tags":["startupWarnings"]}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.224+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":21},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":21},"outgoing":{"minWireVersion":6,"maxWireVersion":21},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":21},"incomingInternalClient":{"minWireVersion":21,"maxWireVersion":21},"outgoing":{"minWireVersion":21,"maxWireVersion":21},"isInternalClient":true}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.224+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"7.0","context":"startup"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.224+00:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.225+00:00"},"s":"I",  "c":"CONTROL",  "id":6608200, "ctx":"initandlisten","msg":"Initializing cluster server parameters from disk"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.225+00:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.227+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.230+00:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.230+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.231+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.231+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.231+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.231+00:00"},"s":"I",  "c":"CONTROL",  "id":8423403, "ctx":"initandlisten","msg":"mongod startup complete","attr":{"Summary of time elapsed":{"Startup from clean shutdown?":true,"Statistics":{"Transport layer setup":"0 ms","Run initial syncer crash recovery":"0 ms","Create storage engine lock file in the data directory":"0 ms","Get metadata describing storage engine":"0 ms","Validate options in metadata against current startup options":"0 ms","Create storage engine":"790 ms","Write current PID to file":"0 ms","Initialize FCV before rebuilding indexes":"1 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Rebuild indexes for collections":"0 ms","Load cluster parameters from disk for a standalone":"0 ms","Build user and roles graph":"0 ms","Set up the background thread pool responsible for waiting for opTimes to be majority committed":"0 ms","Initialize information needed to make a mongod instance shard aware":"0 ms","Start up the replication coordinator":"2 ms","Start transport layer":"1 ms","_initAndListen total elapsed time":"803 ms"}}}}
+startcop-data-populator  | 2025-10-26 07:49:58,234 [INFO] HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/e463f6d0-ca0f-453a-8998-5fc98100fbbe/upsert "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,242 [INFO] HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/e463f6d0-ca0f-453a-8998-5fc98100fbbe/upsert "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,249 [INFO] HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/e463f6d0-ca0f-453a-8998-5fc98100fbbe/upsert "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,255 [INFO] HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/e463f6d0-ca0f-453a-8998-5fc98100fbbe/upsert "HTTP/1.1 200 OK"
+startcop-data-populator  | 2025-10-26 07:49:58,255 [INFO] Inserted 4 regulatory chunks into ChromaDB collection 'regulations_test'
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.257+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.18.0.4:58238","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"9c57ac96-775d-4c0d-9b1e-c7a681e2cb05"}},"connectionId":1,"connectionCount":1}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.257+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn1","msg":"client metadata","attr":{"remote":"172.18.0.4:58238","client":"conn1","negotiatedCompressors":[],"doc":{"driver":{"name":"PyMongo|c","version":"4.15.3"},"os":{"type":"Linux","name":"Linux","architecture":"aarch64","version":"6.10.14-linuxkit"},"platform":"CPython 3.11.14.final.0","env":{"container":{"runtime":"docker"}}}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.258+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.18.0.4:58244","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"1041f560-a78e-4232-91b1-53f39733822a"}},"connectionId":2,"connectionCount":2}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.258+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.18.0.4:58254","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"cfa2afd2-8ac9-438f-ad68-d2d5cbb6ee4d"}},"connectionId":3,"connectionCount":3}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.258+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn2","msg":"client metadata","attr":{"remote":"172.18.0.4:58244","client":"conn2","negotiatedCompressors":[],"doc":{"driver":{"name":"PyMongo|c","version":"4.15.3"},"os":{"type":"Linux","name":"Linux","architecture":"aarch64","version":"6.10.14-linuxkit"},"platform":"CPython 3.11.14.final.0","env":{"container":{"runtime":"docker"}}}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.258+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn3","msg":"client metadata","attr":{"remote":"172.18.0.4:58254","client":"conn3","negotiatedCompressors":[],"doc":{"driver":{"name":"PyMongo|c","version":"4.15.3"},"os":{"type":"Linux","name":"Linux","architecture":"aarch64","version":"6.10.14-linuxkit"},"platform":"CPython 3.11.14.final.0","env":{"container":{"runtime":"docker"}}}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.258+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn2","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":0}}
+startcop-data-populator  | 2025-10-26 07:49:58,260 [INFO] Inserted startup docs and resource mapping into MongoDB database 'startcop_test'
+startcop-data-populator  | 2025-10-26 07:49:58,261 [INFO] Data population complete.
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.261+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn2","msg":"Connection ended","attr":{"remote":"172.18.0.4:58244","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"1041f560-a78e-4232-91b1-53f39733822a"}},"connectionId":2,"connectionCount":2}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.759+00:00"},"s":"I",  "c":"-",        "id":20883,   "ctx":"conn1","msg":"Interrupted operation as its client disconnected","attr":{"opId":11}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.760+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn3","msg":"Connection ended","attr":{"remote":"172.18.0.4:58254","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"cfa2afd2-8ac9-438f-ad68-d2d5cbb6ee4d"}},"connectionId":3,"connectionCount":1}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:49:58.760+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn1","msg":"Connection ended","attr":{"remote":"172.18.0.4:58238","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"9c57ac96-775d-4c0d-9b1e-c7a681e2cb05"}},"connectionId":1,"connectionCount":0}}
+[Kstartcop-data-populator exited with code 0
+[31m[1mAborting on container exit...[0m
+ Container startcop-data-populator  Stopping
+ Container startcop-backend  Stopping
+ Container startcop-data-populator  Stopped
+ Container startcop-backend  Stopped
+ Container startcop-mongo  Stopping
+ Container startcop-chroma  Stopping
+[Kstartcop-backend exited with code 137
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.849+00:00"},"s":"I",  "c":"CONTROL",  "id":23377,   "ctx":"SignalHandler","msg":"Received signal","attr":{"signal":15,"error":"Terminated"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"CONTROL",  "id":23378,   "ctx":"SignalHandler","msg":"Signal was sent by kill(2)","attr":{"pid":0,"uid":0}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"CONTROL",  "id":23381,   "ctx":"SignalHandler","msg":"will terminate after current cmd ends"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"REPL",     "id":4784900, "ctx":"SignalHandler","msg":"Stepping down the ReplicationCoordinator for shutdown","attr":{"waitTimeMillis":15000}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"REPL",     "id":4794602, "ctx":"SignalHandler","msg":"Attempting to enter quiesce mode"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"-",        "id":6371601, "ctx":"SignalHandler","msg":"Shutting down the FLE Crud thread pool"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"COMMAND",  "id":4784901, "ctx":"SignalHandler","msg":"Shutting down the MirrorMaestro"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.850+00:00"},"s":"I",  "c":"SHARDING", "id":4784902, "ctx":"SignalHandler","msg":"Shutting down the WaitForMajorityService"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.851+00:00"},"s":"I",  "c":"CONTROL",  "id":4784903, "ctx":"SignalHandler","msg":"Shutting down the LogicalSessionCache"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.851+00:00"},"s":"I",  "c":"NETWORK",  "id":20562,   "ctx":"SignalHandler","msg":"Shutdown: going to close listening sockets"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.852+00:00"},"s":"I",  "c":"NETWORK",  "id":23017,   "ctx":"listener","msg":"removing socket file","attr":{"path":"/tmp/mongodb-27017.sock"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.852+00:00"},"s":"I",  "c":"NETWORK",  "id":4784905, "ctx":"SignalHandler","msg":"Shutting down the global connection pool"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.852+00:00"},"s":"I",  "c":"CONTROL",  "id":4784906, "ctx":"SignalHandler","msg":"Shutting down the FlowControlTicketholder"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.852+00:00"},"s":"I",  "c":"-",        "id":20520,   "ctx":"SignalHandler","msg":"Stopping further Flow Control ticket acquisitions."}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.852+00:00"},"s":"I",  "c":"CONTROL",  "id":4784908, "ctx":"SignalHandler","msg":"Shutting down the PeriodicThreadToAbortExpiredTransactions"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"REPL",     "id":4784909, "ctx":"SignalHandler","msg":"Shutting down the ReplicationCoordinator"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"SHARDING", "id":4784910, "ctx":"SignalHandler","msg":"Shutting down the ShardingInitializationMongoD"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"REPL",     "id":4784911, "ctx":"SignalHandler","msg":"Enqueuing the ReplicationStateTransitionLock for shutdown"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"-",        "id":4784912, "ctx":"SignalHandler","msg":"Killing all operations for shutdown"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"-",        "id":4695300, "ctx":"SignalHandler","msg":"Interrupted all currently running operations","attr":{"opsKilled":3}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"TENANT_M", "id":5093807, "ctx":"SignalHandler","msg":"Shutting down all TenantMigrationAccessBlockers on global shutdown"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"ASIO",     "id":22582,   "ctx":"TenantMigrationBlockerNet","msg":"Killing all outstanding egress activity."}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"ASIO",     "id":6529201, "ctx":"SignalHandler","msg":"Network interface redundant shutdown","attr":{"state":"Stopped"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"ASIO",     "id":22582,   "ctx":"SignalHandler","msg":"Killing all outstanding egress activity."}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"COMMAND",  "id":4784913, "ctx":"SignalHandler","msg":"Shutting down all open transactions"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"REPL",     "id":4784914, "ctx":"SignalHandler","msg":"Acquiring the ReplicationStateTransitionLock for shutdown"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"INDEX",    "id":4784915, "ctx":"SignalHandler","msg":"Shutting down the IndexBuildsCoordinator"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"NETWORK",  "id":4784918, "ctx":"SignalHandler","msg":"Shutting down the ReplicaSetMonitor"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"SHARDING", "id":4784921, "ctx":"SignalHandler","msg":"Shutting down the MigrationUtilExecutor"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"ASIO",     "id":22582,   "ctx":"MigrationUtil-TaskExecutor","msg":"Killing all outstanding egress activity."}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"COMMAND",  "id":4784923, "ctx":"SignalHandler","msg":"Shutting down the ServiceEntryPoint"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"CONTROL",  "id":4784927, "ctx":"SignalHandler","msg":"Shutting down the HealthLog"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"CONTROL",  "id":4784928, "ctx":"SignalHandler","msg":"Shutting down the TTL monitor"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"INDEX",    "id":3684100, "ctx":"SignalHandler","msg":"Shutting down TTL collection monitor thread"}
+startcop-chroma          | 
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.853+00:00"},"s":"I",  "c":"INDEX",    "id":3684101, "ctx":"SignalHandler","msg":"Finished shutting down TTL collection monitor thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"CONTROL",  "id":6278511, "ctx":"SignalHandler","msg":"Shutting down the Change Stream Expired Pre-images Remover"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"CONTROL",  "id":4784929, "ctx":"SignalHandler","msg":"Acquiring the global lock for shutdown"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"CONTROL",  "id":4784930, "ctx":"SignalHandler","msg":"Shutting down the storage engine"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22320,   "ctx":"SignalHandler","msg":"Shutting down journal flusher thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22321,   "ctx":"SignalHandler","msg":"Finished shutting down journal flusher thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22322,   "ctx":"SignalHandler","msg":"Shutting down checkpoint thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22323,   "ctx":"SignalHandler","msg":"Finished shutting down checkpoint thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22261,   "ctx":"SignalHandler","msg":"Timestamp monitor shutting down"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":20282,   "ctx":"SignalHandler","msg":"Deregistering all the collections"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22317,   "ctx":"SignalHandler","msg":"WiredTigerKVEngine shutting down"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22318,   "ctx":"SignalHandler","msg":"Shutting down session sweeper thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.854+00:00"},"s":"I",  "c":"STORAGE",  "id":22319,   "ctx":"SignalHandler","msg":"Finished shutting down session sweeper thread"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.855+00:00"},"s":"I",  "c":"STORAGE",  "id":4795902, "ctx":"SignalHandler","msg":"Closing WiredTiger","attr":{"closeConfig":"leak_memory=true,use_timestamp=false,"}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.856+00:00"},"s":"I",  "c":"WTCHKPT",  "id":22430,   "ctx":"SignalHandler","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761465009,"ts_usec":856522,"thread":"1:0xffffbaa0ebc0","session_name":"close_ckpt","category":"WT_VERB_CHECKPOINT_PROGRESS","category_id":6,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"saving checkpoint snapshot min: 6, snapshot max: 6 snapshot count: 0, oldest timestamp: (0, 0) , meta checkpoint timestamp: (0, 0) base write gen: 642"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.869+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"SignalHandler","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761465009,"ts_usec":869597,"thread":"1:0xffffbaa0ebc0","session_name":"WT_CONNECTION.close","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"shutdown checkpoint has successfully finished and ran for 14 milliseconds"}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.869+00:00"},"s":"I",  "c":"WTRECOV",  "id":22430,   "ctx":"SignalHandler","msg":"WiredTiger message","attr":{"message":{"ts_sec":1761465009,"ts_usec":869809,"thread":"1:0xffffbaa0ebc0","session_name":"WT_CONNECTION.close","category":"WT_VERB_RECOVERY_PROGRESS","category_id":30,"verbose_level":"DEBUG_1","verbose_level_id":1,"msg":"shutdown was completed successfully and took 14ms, including 0ms for the rollback to stable, and 14ms for the checkpoint."}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.875+00:00"},"s":"I",  "c":"STORAGE",  "id":4795901, "ctx":"SignalHandler","msg":"WiredTiger closed","attr":{"durationMillis":20}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.875+00:00"},"s":"I",  "c":"STORAGE",  "id":22279,   "ctx":"SignalHandler","msg":"shutdown: removing fs lock..."}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.875+00:00"},"s":"I",  "c":"-",        "id":4784931, "ctx":"SignalHandler","msg":"Dropping the scope cache for shutdown"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.875+00:00"},"s":"I",  "c":"FTDC",     "id":20626,   "ctx":"SignalHandler","msg":"Shutting down full-time diagnostic data capture"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.877+00:00"},"s":"I",  "c":"CONTROL",  "id":20565,   "ctx":"SignalHandler","msg":"Now exiting"}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.877+00:00"},"s":"I",  "c":"CONTROL",  "id":8423404, "ctx":"SignalHandler","msg":"mongod shutdown complete","attr":{"Summary of time elapsed":{"Statistics":{"Enter terminal shutdown":"0 ms","Step down the replication coordinator for shutdown":"0 ms","Time spent in quiesce mode":"0 ms","Shut down FLE Crud subsystem":"0 ms","Shut down MirrorMaestro":"0 ms","Shut down WaitForMajorityService":"0 ms","Shut down the logical session cache":"1 ms","Shut down the transport layer":"1 ms","Shut down the global connection pool":"0 ms","Shut down the flow control ticket holder":"0 ms","Kill all operations for shutdown":"0 ms","Shut down all tenant migration access blockers on global shutdown":"0 ms","Shut down all open transactions":"0 ms","Acquire the RSTL for shutdown":"0 ms","Shut down the IndexBuildsCoordinator and wait for index builds to finish":"0 ms","Shut down the replica set monitor":"0 ms","Shut down the migration util executor":"0 ms","Shut down the health log":"0 ms","Shut down the TTL monitor":"0 ms","Shut down expired pre-images and documents removers":"1 ms","Shut down the storage engine":"21 ms","Wait for the oplog cap maintainer thread to stop":"0 ms","Shut down full-time data capture":"0 ms","shutdownTask total elapsed time":"27 ms"}}}}
+startcop-mongo           | {"t":{"$date":"2025-10-26T07:50:09.877+00:00"},"s":"I",  "c":"CONTROL",  "id":23138,   "ctx":"SignalHandler","msg":"Shutting down","attr":{"exitCode":0}}
+ Container startcop-chroma  Stopped
+[Kstartcop-chroma exited with code 0
+ Container startcop-mongo  Stopped
+
