@@ -7,6 +7,7 @@ Run with the --test flag to populate test data.
 import argparse
 import os
 import logging
+from .schema import STARTUP_DOCUMENT_SCHEMA, RESOURCE_MAPPING_SCHEMA, CHROMA_REGULATIONS_SCHEMA
 from pymongo import MongoClient
 import chromadb
 from chromadb.config import Settings
@@ -156,6 +157,14 @@ def populate_mongodb(is_test=True):
         db_name = "startcop_test" if is_test else "startcop"
         client = MongoClient(mongo_uri)
         db = client[db_name]
+        # Validate documents against schema (for dev/debug only)
+        def validate(doc, schema):
+            for k, v in schema.items():
+                if k not in doc:
+                    raise ValueError(f"Missing key '{k}' in document: {doc}")
+        for doc in [startup_business_plan, startup_privacy_policy, startup_articles]:
+            validate(doc, STARTUP_DOCUMENT_SCHEMA)
+        validate(resource_mapping, RESOURCE_MAPPING_SCHEMA)
         db.startup_documents.insert_many(
             [startup_business_plan, startup_privacy_policy, startup_articles]
         )
