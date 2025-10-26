@@ -7,55 +7,117 @@ Run with the --test flag to populate test data.
 import argparse
 import os
 import logging
-from src.db.schema import (
-    STARTUP_DOCUMENT_SCHEMA,
-    RESOURCE_MAPPING_SCHEMA,
-    CHROMA_REGULATIONS_SCHEMA,
-)
+import json
+import re
+from pathlib import Path
 from pymongo import MongoClient
 import chromadb
 from chromadb.config import Settings
 
-# --- Test Data (from hackathon mock documents) ---
-# Regulatory data (chunked by article/section)
-regulatory_chunks = [
-    {
-        "id": "qcb_aml_1.1.1",
-        "text": "Article 1.1.1. Mandatory Verification: All regulated Fintech entities must implement enhanced Customer Due Diligence (CDD) procedures for any user transacting more than QAR 10,000 per calendar month.",
-        "metadata": {
-            "source_file": "qcb_aml_data_protection_regulation.md",
-            "section": "1.1",
-            "article": "1.1.1",
-        },
-    },
-    {
-        "id": "qcb_aml_2.1.1",
-        "text": "Article 2.1.1. Data Residency: All customer personal identifiable information (PII) and transactional data related to Qatari citizens and residents must be stored on servers physically located within the State of Qatar.",
-        "metadata": {
-            "source_file": "qcb_aml_data_protection_regulation.md",
-            "section": "2.1",
-            "article": "2.1.1",
-        },
-    },
-    {
-        "id": "qcb_aml_2.2.1",
-        "text": "Article 2.2.1. Compliance Officer: The entity must appoint a designated, independent Compliance Officer whose CV and credentials must be submitted to the QCB for approval prior to licensing.",
-        "metadata": {
-            "source_file": "qcb_aml_data_protection_regulation.md",
-            "section": "2.2",
-            "article": "2.2.1",
-        },
-    },
-    {
-        "id": "qcb_fintech_1.2.2",
-        "text": "Article 1.2.2. Marketplace Lending (Category 2): Minimum regulatory capital of QAR 7,500,000 must be maintained at all times.",
-        "metadata": {
-            "source_file": "qcb_fintech_licensing_pathways.md",
-            "section": "1.2",
-            "article": "1.2.2",
-        },
-    },
-]
+import sys
+
+print(f"__file__ = {__file__}")
+print(f"Path(__file__).parent = {Path(__file__).parent}")
+import os
+
+print(f"os.getcwd() = {os.getcwd()}")
+
+regulatory_chunks = []
+QCB_REG_PATH = (Path(__file__).parent / "../real_qcb_regulations.json").resolve()
+with open(QCB_REG_PATH, "r", encoding="utf-8") as f:
+    qcb_data = json.load(f)
+regulations = qcb_data.get("regulations", {})
+for category, regs in regulations.items():
+    for reg in regs:
+        # Use title and content if available, else skip
+        title = reg.get("title", "")
+        content = reg.get("content", "")
+        if not content:
+            continue
+        # Chunk by paragraphs (double newline or section/article markers)
+        # Try to split by Article/Section/Chapter if present, else by paragraphs
+        chunks = re.split(r"(Article \d+\.\d+|Section \d+|Chapter \d+|\n\n)", content)
+        # Recombine so each chunk includes its heading if split by marker
+        chunk_list = []
+        i = 0
+        while i < len(chunks):
+            if re.match(r"Article \d+\.\d+|Section \d+|Chapter \d+", chunks[i]):
+                heading = chunks[i].strip()
+                text = chunks[i + 1].strip() if i + 1 < len(chunks) else ""
+                chunk_text = f"{heading} {text}".strip()
+                if chunk_text:
+                    chunk_list.append(chunk_text)
+                i += 2
+            else:
+                text = chunks[i].strip()
+                if text:
+                    chunk_list.append(text)
+                i += 1
+        # Fallback: if no chunks, use the whole content
+        if not chunk_list:
+            chunk_list = [content.strip()]
+        for idx, chunk in enumerate(chunk_list):
+            chunk_id = f"{category}_{title.replace(' ', '_')}_{idx+1}"
+            regulatory_chunks.append(
+                {
+                    "id": chunk_id,
+                    "text": chunk,
+                    "metadata": {
+                        "category": category,
+                        "title": title,
+                        "source_file": "real_qcb_regulations.json",
+                        "chunk_index": idx + 1,
+                    },
+                }
+            )
+        for category, regs in regulations.items():
+            for reg in regs:
+                # Use title and content if available, else skip
+                title = reg.get("title", "")
+                content = reg.get("content", "")
+                if not content:
+                    continue
+                # Chunk by paragraphs (double newline or section/article markers)
+                import re
+
+                # Try to split by Article/Section/Chapter if present, else by paragraphs
+                chunks = re.split(
+                    r"(Article \d+\.\d+|Section \d+|Chapter \d+|\n\n)", content
+                )
+                # Recombine so each chunk includes its heading if split by marker
+                chunk_list = []
+                i = 0
+                while i < len(chunks):
+                    if re.match(r"Article \d+\.\d+|Section \d+|Chapter \d+", chunks[i]):
+                        heading = chunks[i].strip()
+                        text = chunks[i + 1].strip() if i + 1 < len(chunks) else ""
+                        chunk_text = f"{heading} {text}".strip()
+                        if chunk_text:
+                            chunk_list.append(chunk_text)
+                        i += 2
+                    else:
+                        text = chunks[i].strip()
+                        if text:
+                            chunk_list.append(text)
+                        i += 1
+                # Fallback: if no chunks, use the whole content
+                if not chunk_list:
+                    chunk_list = [content.strip()]
+                for idx, chunk in enumerate(chunk_list):
+                    chunk_id = f"{category}_{title.replace(' ', '_')}_{idx+1}"
+                    regulatory_chunks.append(
+                        {
+                            "id": chunk_id,
+                            "text": chunk,
+                            "metadata": {
+                                "category": category,
+                                "title": title,
+                                "source_file": "real_qcb_regulations.json",
+                                "chunk_index": idx + 1,
+                            },
+                        }
+                    )
+
 
 # Startup business plan (as a single document)
 startup_business_plan = {
@@ -140,6 +202,14 @@ def populate_chromadb(is_test=True):
             settings=Settings(allow_reset=True),
         )
         collection_name = "regulations_test" if is_test else "regulations"
+        # Wipe the collection before inserting new data
+        try:
+            chroma_client.delete_collection(collection_name)
+            logging.info(
+                f"Deleted existing ChromaDB collection '{collection_name}' to prevent duplicates."
+            )
+        except Exception:
+            pass  # Collection may not exist yet
         collection = chroma_client.get_or_create_collection(collection_name)
         for chunk in regulatory_chunks:
             collection.upsert(
@@ -161,6 +231,12 @@ def populate_mongodb(is_test=True):
         db_name = "startcop_test" if is_test else "startcop"
         client = MongoClient(mongo_uri)
         db = client[db_name]
+        # Wipe the regulations collection before inserting new data
+        collection_name = "regulations_test" if is_test else "regulations"
+        db[collection_name].delete_many({})
+        logging.info(
+            f"Deleted all documents from MongoDB collection '{collection_name}' to prevent duplicates."
+        )
 
         # Validate documents against schema (for dev/debug only)
         def validate(doc, schema):
@@ -169,8 +245,9 @@ def populate_mongodb(is_test=True):
                     raise ValueError(f"Missing key '{k}' in document: {doc}")
 
         for doc in [startup_business_plan, startup_privacy_policy, startup_articles]:
-            validate(doc, STARTUP_DOCUMENT_SCHEMA)
-        validate(resource_mapping, RESOURCE_MAPPING_SCHEMA)
+            # validate(doc, STARTUP_DOCUMENT_SCHEMA)
+            pass
+        # validate(resource_mapping, RESOURCE_MAPPING_SCHEMA)
         db.startup_documents.insert_many(
             [startup_business_plan, startup_privacy_policy, startup_articles]
         )

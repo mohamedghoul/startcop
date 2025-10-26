@@ -1,7 +1,5 @@
+
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
 *.pyc
 *.pyo
 *.pyd
@@ -18,3 +16,6 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+.pytest_cache
+.git
+node_modules

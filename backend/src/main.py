@@ -15,6 +15,7 @@ from src.knowledge_base.gap_analyzer import GapAnalyzer
 from src.document_database.mongo_setup import MongoDocumentStore
 from src.processing_pipeline.mongo_writer import MongoWriter
 from src.knowledge_base.update_scheduler import start_scheduler
+from fastapi import Body
 
 app = FastAPI(
     title="StartCop API",
@@ -124,12 +125,15 @@ async def upload_and_apply(
 
 @app.post("/api/v0/rag/", response_class=JSONResponse)
 def run_rag(
-    query: RAGQuery,
+    query: RAGQuery = Body(...),
     with_scorecard: bool = Query(False, description="Include readiness scorecard"),
+    feedback: str = Body(
+        None, description="Optional user/expert feedback on AI scoring/explanation"
+    ),
 ) -> dict:
-    """Run the RAG pipeline with a user query and return explanation and relevant regulations. Optionally include readiness scorecard."""
+    """Run the RAG pipeline with a user query and return explanation, relevant regulations, scorecard, and feedback status."""
     result = rag_pipeline.run(
-        query.query, top_k=query.top_k, with_scorecard=with_scorecard
+        query.query, top_k=query.top_k, with_scorecard=with_scorecard, feedback=feedback
     )
     return result
 
